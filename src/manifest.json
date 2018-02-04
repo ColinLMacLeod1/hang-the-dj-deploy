@@ -7,8 +7,8 @@
   "background_color": "#fff",
   "theme_color": "#000",
   "icons": [{
-    "src": "./assets/icons/DJ_400x400.png",
-    "type": "image/png",
-    "sizes": "400x400"
+    "src": "./assets/images/dj-logo.jpg",
+    "type": "image/jpg",
+    "sizes": "219x230"
   }]
 }
