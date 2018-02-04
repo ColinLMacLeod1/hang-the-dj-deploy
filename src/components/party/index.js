@@ -21,7 +21,7 @@ export default class Party extends Component {
 
   componentDidMount() {
     this.initialQueue()
-    setInterval(()=>this.getQueue(), 1000);
+    setInterval(()=>this.getQueue(), 15000);
 
   }
 
