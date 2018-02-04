@@ -21,7 +21,7 @@ export default class Party extends Component {
 
   componentDidMount() {
     this.initialQueue()
-    setInterval(()=>this.getQueue(), 15000);
+    setInterval(()=>this.getQueue(), 20000);
 
   }
 
@@ -185,7 +185,10 @@ export default class Party extends Component {
             </CardText>
           </Card>
         </div>
-      <div class={style.queueHeader} >Up Next: <span><button class={style.nextSongBtn} onClick={()=>this.playNext()}>Play Next</button></span></div>
+      <div class={style.queueHeader} >Up Next: <span>
+                                                  <button class={style.nextSongBtn} onClick={()=>this.playNext()}>Play Next</button>
+                                                  <button class={style.nextSongBtn} onClick={()=>this.getQueue()}>Refresh</button>
+                                               </span></div>
             <div class={style.queueWrapper}>
             {this.state.queue.map((songObj,index)=>(
             <Card className={style.queueElement} onClick={()=>{this.removeSong(index)}} key={index}>
