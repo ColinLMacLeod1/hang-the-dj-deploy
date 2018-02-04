@@ -32,7 +32,7 @@ export default class Party extends Component {
         queue:res.data,
         allSongs:res.data,
       })
-    })
+    }).catch((err)=>console.log(err))
   }
 
   getQueue = () => {

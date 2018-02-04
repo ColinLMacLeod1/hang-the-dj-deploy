@@ -56,7 +56,7 @@ export default class Party extends Component {
       self.setState({
           token: response.data.access_token
       })
-    ))
+    )).catch((err)=>console.log(err))
   }
 
   addSong = () => {
