@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+  branch = "master"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
