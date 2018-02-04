@@ -13,7 +13,7 @@ export default class Party extends Component {
         numSongs:5,
         code: props.code,
         token: props.access_token,
-        redirect: 'http://localhost:8081/settings/',
+        redirect: 'https://stoic-nightingale-780556.netlify.com/settings/',
         responseType: 'code'
     }
   }
@@ -21,7 +21,7 @@ export default class Party extends Component {
   componentDidMount() {
     this.getToken();
   }
-  
+
   //get access token
   getToken = () => {
       const self = this;
@@ -42,7 +42,7 @@ export default class Party extends Component {
       })
     ))
   }
-  
+
   addSong = () => {
     var array = this.state.queue
     array.push({song: "Song", artist: "Artist"})
