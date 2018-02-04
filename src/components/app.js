@@ -9,6 +9,8 @@ import Party from './party';
 import Settings from './settings';
 import Spotify from './spotify';
 
+
+
 export default class App extends Component {
 	/** Gets fired when the route changes.
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
@@ -17,6 +19,8 @@ export default class App extends Component {
 	handleRoute = e => {
 		this.currentUrl = e.url;
 	};
+
+	
 
 	render() {
 		return (
