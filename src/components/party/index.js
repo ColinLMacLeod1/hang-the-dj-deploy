@@ -3,6 +3,7 @@ import style from './style.less';
 import axios from 'axios'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import qs from 'qs'
+import openSocket from 'socket.io-client'
 
 
 export default class Party extends Component {
@@ -14,14 +15,29 @@ export default class Party extends Component {
       queue: [],
       allSongs: [],
       token: props.token,
-      ugly: 0
-
+      ugly: 0,
+      code: 0,
+      started: false
     }
   }
 
   componentDidMount() {
-    this.initialQueue()
-    setInterval(()=>this.getQueue(), 20000);
+    const self = this;
+    const socket = openSocket('https://hang-the-dj-server-pqfesvpbvg.now.sh')
+    socket.on('code',code => {
+      this.setState({
+        code: code
+      })
+    })
+    socket.on('newSong',newSong =>{
+      console.log("New song: "+newSong.title)
+      var newQueue = this.state.queue.slice();
+      newQueue.push(newSong)
+      self.setState({
+        queue: newQueue
+      })
+    })
+
 
   }
 
@@ -77,19 +93,35 @@ export default class Party extends Component {
     var artist = self.state.queue[0].artist;
     var time = 0;
     let newQueue = self.state.queue.slice(1)
+    if(!this.state.started){
+      self.setState({
+        started: true
+      })
+    }
     self.setState({
       queue: newQueue
     })
-    self.getSongObj(song, artist)
-    setTimeout(()=>{
-      time = self.state.currentSong.time-5005;
-      console.log(time)
-      setTimeout(()=>{
-        self.playNext()
-      },time)
-    }, 5000)
-
-
+    axios.post('https://hang-the-dj-server-pqfesvpbvg.now.sh/songdata',{
+      title: song,
+      artist: artist,
+      token: self.state.token
+    }).then((response)=>{
+      self.setState({
+        currentSong: response.data
+      })
+      axios.post('https://hang-the-dj-server-pqfesvpbvg.now.sh/play',{
+          songObj:response.data,
+          token: self.state.token
+        }).then(()=>{
+        setTimeout(()=>{
+          time = self.state.currentSong.time-5005;
+          console.log(time)
+          setTimeout(()=>{
+            self.playNext()
+          },time)
+        }, 5000)
+      }).catch(err=>console.log("Play:", err))
+    }).catch(err=>console.log("Data:",err))
   }
 
   //takes a song name and returns a song object
@@ -171,6 +203,7 @@ export default class Party extends Component {
       <div class={style.party}>
         <h1 style={{width:"100vw"}}> Your Party Queue </h1>
         <div class={style.partyNum}>Your Party Number is: <span>(226) 212-4435</span></div>
+        <div class={style.partyNum}>Your Party Code is: <span>{this.state.code}</span></div>
         <div class={style.wrapper}>
               <div class={style.queueHeader}>Now Playing: </div>
 
@@ -186,7 +219,7 @@ export default class Party extends Component {
           </Card>
         </div>
       <div class={style.queueHeader} >Up Next: <span>
-                                                  <button class={style.nextSongBtn} onClick={()=>this.playNext()}>Play Next</button>
+                                                  <button class={style.nextSongBtn} onClick={()=>this.playNext()}>{this.state.started ? "Play Next" : "Start"}</button>
                                                   <button class={style.nextSongBtn} onClick={()=>this.getQueue()}>Refresh</button>
                                                </span></div>
             <div class={style.queueWrapper}>
