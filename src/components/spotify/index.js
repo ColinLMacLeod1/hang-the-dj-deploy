@@ -12,7 +12,7 @@ export default class Spotify extends Component {
       token: props.code,
       token2: props.acces_token,
       response: 'No response yet',
-      redirect: 'https://stoic-nightingale-780556.netlify.com/spotify/',
+      redirect: 'https://hangthedj.netlify.com/spotify/',
       responseType: 'code',
       scopes: ['user-read-playback-state','user-read-private'],
       queue:[]

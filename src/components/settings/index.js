@@ -13,7 +13,7 @@ export default class Party extends Component {
         numSongs:5,
         code: props.code,
         token: props.access_token,
-        redirect: 'https://stoic-nightingale-780556.netlify.com/settings/',
+        redirect: 'https://hangthedj.netlify.com/settings/',
         responseType: 'code'
     }
   }
