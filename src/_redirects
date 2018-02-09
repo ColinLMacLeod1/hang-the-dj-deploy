@@ -1,2 +1,2 @@
-/settings/*  /settings/ 200
-/party/*     /party/    200
+/settings/ code=:code  /settings/:code 200
+/party/ token=:token     /party/token   200
